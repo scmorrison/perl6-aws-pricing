@@ -2,6 +2,8 @@
 
 use v6;
 
+unit module AWS::Pricing;
+
 use HTTP::Tinyish;
 
 class X::AWS::Pricing is Exception {
