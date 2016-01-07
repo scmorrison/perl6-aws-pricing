@@ -15,15 +15,15 @@ AWS::Pricing
 --------------
 
 ```perl6
-    use AWS::Pricing;
-		my $awsp = AWS::Pricing.new(aws_region => 'us-east-1', api_version => 'v1.0');
-		
-		# List all Service Offer indexes
-		say $awsp.list-offers();
-		
-		# List current offers for specific service
-		say $awsp.get-service-offers("AmazonEC2");
-		# See code for available service codes
+use AWS::Pricing;
+my $awsp = AWS::Pricing.new(aws_region => 'us-east-1', api_version => 'v1.0');
+
+# List all Service Offer indexes
+say $awsp.list-offers();
+	
+# List current offers for specific service
+say $awsp.get-service-offers("AmazonEC2");
+# See code for available service codes
 ```
 
 Installation
