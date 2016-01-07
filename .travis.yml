@@ -6,5 +6,5 @@ install:
   - panda install .
   - panda installdeps .
 script:
-  - prove -v -r --exec=perl6 t/
+  - perl6 t/00-basics.t
 sudo: false
