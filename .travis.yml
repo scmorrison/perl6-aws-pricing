@@ -3,6 +3,7 @@ perl6:
   - latest
 install:
   - rakudobrew build-panda
+  - panda install .
   - panda installdeps .
 script:
   - prove -v -e 'perl6 -Ilib' t/

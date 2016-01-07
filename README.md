@@ -1,7 +1,5 @@
-Name
-====
-
-AWS::Pricing
+AWS::Pricing [![Build Status](https://travis-ci.org/scmorrison/perl6-aws-pricing.svg?branch=master)](https://travis-ci.org/scmorrison/perl6-aws-pricing)
+============
 
 Description
 ===========
