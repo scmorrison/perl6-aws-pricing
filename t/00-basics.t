@@ -1,6 +1,7 @@
+use Test;
+
 use AWS::Pricing;
 use JSON::Pretty;
-use Test;
 
 plan 6;
 
