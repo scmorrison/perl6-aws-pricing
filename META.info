@@ -8,7 +8,7 @@
       "AWS::Pricing" : "lib/AWS/Pricing.p6"
   },
   "depends"     : [ "HTTP::Tinyish", "JSON::Pretty" ],
-  "source-url"  : "git://github.com/cnstechnicalgroup/perl6-aws-pricing.git",
+  "source-url"  : "git://github.com/scmorrison/perl6-aws-pricing.git",
   "authors" : [
       "Sam Morrison"
   ]
