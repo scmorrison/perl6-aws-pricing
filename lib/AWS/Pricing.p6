@@ -16,8 +16,8 @@ class X::AWS::Pricing is Exception {
 
 class AWS::Pricing:ver<v0.0.1>:auth<github:scmorrison> {
 
-    has $.aws_region = 'us-east-1'; # Only region for now.
-    has $.api_version = 'v1.0';
+    has $.aws_region = 'us-east-1' is rw; # Only region for now.
+    has $.api_version = 'v1.0' is rw;
     has $.aws_pricing_api_uri;
 		has @.offer_codes = ["AmazonS3",
 												 "AmazonGlacier",

@@ -39,6 +39,16 @@ Install directly with "panda":
 
     ./scripts/install.sh
 
+
+Testing
+=======
+
+To run tests:
+
+```
+$ prove -e "perl6 -Ilib"
+```
+
 Todo
 ====
 
