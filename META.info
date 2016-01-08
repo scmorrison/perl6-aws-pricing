@@ -1,5 +1,5 @@
 {
-  "perl"        : "6.*",
+  "perl"        : "v6",
   "name"        : "AWS::Pricing",
   "version"     : "0.1.0",
   "author"      : "github:scmorrison",

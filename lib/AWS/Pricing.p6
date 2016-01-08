@@ -2,8 +2,6 @@
 
 use v6;
 
-unit module AWS::Pricing;
-
 use HTTP::Tinyish;
 
 class X::AWS::Pricing is Exception {
@@ -15,7 +13,7 @@ class X::AWS::Pricing is Exception {
     }
 }
 
-class AWS::Pricing:ver<v0.0.1>:auth<github:scmorrison> {
+module AWS::Pricing:ver<0.1.0>:auth<github:scmorrison> {
 
     has $.aws_region is rw = 'us-east-1';
     has $.api_version is rw = 'v1.0';
