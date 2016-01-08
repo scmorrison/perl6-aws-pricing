@@ -13,7 +13,7 @@ class X::AWS::Pricing is Exception {
     }
 }
 
-module AWS::Pricing:ver<0.1.0>:auth<github:scmorrison> {
+class AWS::Pricing:ver<0.1.0>:auth<github:scmorrison> {
 
     has $.aws_region is rw = 'us-east-1';
     has $.api_version is rw = 'v1.0';
