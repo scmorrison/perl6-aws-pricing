@@ -20,7 +20,7 @@ my $awsp = AWS::Pricing.new(aws_region => 'us-east-1', api_version => 'v1.0');
 say $awsp.list-offers();
 	
 # List current offers for specific service
-say $awsp.get-service-offers("AmazonEC2");
+say $awsp.get-service-offers("AmazonS3");
 # See code for available service codes
 ```
 
