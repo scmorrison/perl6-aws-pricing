@@ -6,6 +6,15 @@ Description
 
 Return current offers from the AWS Price List API.
 
+Usage
+=====
+
+```bash
+Usage:
+  ./bin/aws-pricing [--cache_dir=<Str>] [--region=<Str>] list services [<refresh>] 
+  ./bin/aws-pricing [--cache_dir=<Str>] [--region=<Str>] service offers <service> [<refresh>]
+```
+
 Modules and utilities
 =====================
 
@@ -14,15 +23,32 @@ AWS::Pricing
 
 ```perl6
 use AWS::Pricing;
-my $awsp = AWS::Pricing.new(aws_region => 'us-east-1', api_version => 'v1.0');
 
 # List all Service Offer indexes
-say $awsp.list-offers();
+say AWS::Pricing::list-offers();
 	
 # List current offers for specific service
-say $awsp.get-service-offers("AmazonS3");
-# See code for available service codes
+say AWS::Pricing::service-offers("AmazonS3");
+
 ```
+
+### Valid service codes:
+
+* 
+* AmazonS3
+* AmazonGlacier
+* AmazonSES
+* AmazonRDS
+* AmazonSimpleDB
+* AmazonDynamoDB
+* AmazonEC2
+* AmazonRoute53
+* AmazonRedshift
+* AmazonElastiCache
+* AmazonCloudFront
+* awskms
+* AmazonVPC
+
 
 Installation
 ============
@@ -50,7 +76,7 @@ $ prove -e "perl6 -Ilib"
 Todo
 ====
 
-* Cache offer files, these are large
+* ~~Cache offer files, these are large~~
 * Search offers (must cache first)
 * Tests
 
