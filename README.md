@@ -11,8 +11,8 @@ Usage
 
 ```bash
 Usage:
-  ./bin/aws-pricing [--cache_dir=<Str>] [--region=<Str>] list services [<refresh>] 
-  ./bin/aws-pricing [--cache_dir=<Str>] [--region=<Str>] service offers <service> [<refresh>]
+  bin/aws-pricing [--refresh=<Any>] [--cache_dir=<Any>] [--region=<Any>] list services 
+  bin/aws-pricing [--refresh=<Any>] [--cache_dir=<Any>] [--region=<Any>] [--format=<Any>] service offers <service>
 ```
 
 Modules and utilities
@@ -27,8 +27,8 @@ use AWS::Pricing;
 # List all Service Offer indexes
 say AWS::Pricing::list-offers();
 	
-# List current offers for specific service
-say AWS::Pricing::service-offers("AmazonS3");
+# List current offers for specific service. Valid formats are json or csv.
+say AWS::Pricing::service-offers(service_code => 'AmazonS3', format => 'json');
 
 ```
 

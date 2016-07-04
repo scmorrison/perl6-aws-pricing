@@ -12,7 +12,7 @@ our $cache_path = "$*HOME/.aws-pricing";
 
 my $refresh_cache = False;
 my $aws_pricing_api_uri;
-my @offer_codes = ["AmazonS3",
+my @service_codes = ["AmazonS3",
                    "AmazonGlacier",
                    "AmazonSES",
                    "AmazonRDS",
@@ -29,11 +29,6 @@ my @offer_codes = ["AmazonS3",
 sub path-exists(Str $path, Str $type) {
   if $type ~~ 'f' { return $path.IO ~~ :f }
   if $type ~~ 'd' { return $path.IO ~~ :d }
-}
-
-sub cache_dir(Str $cache_path) {
-  $cache_path = IO::Path.new("$cache_path").Str; 
-  if !path-exists($cache_path, 'd') { mkdir $cache_path }
 }
 
 sub load-from-cache(Str $cache_file) {
@@ -62,9 +57,11 @@ sub request(Str $url, Str $method='GET') {
     return %res<content>;
 }
 
-our sub list-services {
+our sub list-services() {
 
-    my $offers_cache = "$cache_path/offers.json";
+    my $extension = 'json'; 
+
+    my $offers_cache = "$cache_path/offers.$extension";
 
     # Do we have a cached service list
     if !$refresh_cache and path-exists($offers_cache, 'f') {
@@ -72,7 +69,7 @@ our sub list-services {
     }
 
     # Reqest all Services available and their Current Offer URLs
-    my $current_offers_url = "https://pricing." ~ $aws_region ~ ".amazonaws.com/offers/" ~ $api_version ~ "/aws/index.json";
+    my $current_offers_url = "https://pricing.$aws_region.amazonaws.com/offers/$api_version/aws/index.$extension";
     my $offers = request($current_offers_url, 'GET');
     
     if write-to-cache($offers_cache, $offers) {
@@ -81,21 +78,23 @@ our sub list-services {
 
 }
 
-our sub service-offers(Str $offer_code) {
-    # Get Current Offers for specific Service
+our sub service-offers(Str :$service_code!, Str :$format) {
 
-    my $service_offers_cache = "$cache_path/service-offers-$offer_code.json";
+    my $extension = $format ~~ 'json'|'csv' ?? $format !! 'json'; 
+
+    # Get Current Offers for specific Service
+    my $service_offers_cache = "$cache_path/service-offers-$service_code.$extension";
     # Do we have a cached service list
     if !$refresh_cache and path-exists($service_offers_cache, 'f') {
       return load-from-cache $service_offers_cache;
     }
 
     # Confirm $offer_code is valid
-    if (!@offer_codes.first: $offer_code) {
-        say "Invalid Offer Code. Please use one of the following: \n" ~ @offer_codes;
+    if (!@service_codes.first: $service_code) {
+        say "Invalid Service Code. Please use one of the following: \n" ~ @service_codes;
     }
 
-    my $offer_url = "https://pricing." ~ $aws_region ~ ".amazonaws.com/offers/" ~ $api_version ~ "/aws/" ~ $offer_code ~ "/current/index.json";
+    my $offer_url = "https://pricing." ~ $aws_region ~ ".amazonaws.com/offers/$api_version/aws/$service_code/current/index.$extension";
     my $service_offers = request($offer_url, 'GET');
 
     if write-to-cache($service_offers_cache, $service_offers) {

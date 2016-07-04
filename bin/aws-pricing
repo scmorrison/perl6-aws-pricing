@@ -7,7 +7,10 @@ use AWS::Pricing;
 AWS::Pricing::config(cache_dir => "$*HOME/.aws-pricing",
                      region => 'us-east-1');
 
-multi MAIN('list', 'services', Str $refresh?, Str :$cache_dir, Str :$region) {
+multi MAIN('list', 'services',
+           :$refresh = False, 
+           :$cache_dir,
+           :$region) {
 
   # Refresh the cache
   if $refresh {
@@ -29,7 +32,12 @@ multi MAIN('list', 'services', Str $refresh?, Str :$cache_dir, Str :$region) {
   
 }
 
-multi MAIN('service', 'offers', Str $service, Str $refresh?, Str :$cache_dir, Str :$region) {
+multi MAIN('service', 'offers', 
+           $service_code,
+           :$refresh = False,
+           :$cache_dir,
+           :$region,
+           :$format = 'json') {
 
   # Refresh the cache
   if $refresh {
@@ -47,6 +55,6 @@ multi MAIN('service', 'offers', Str $service, Str $refresh?, Str :$cache_dir, St
   }
 
   # List current offers for specific service
-  say AWS::Pricing::service-offers($service);
+  say AWS::Pricing::service-offers(service_code => $service_code, format => $format);
 
 }
