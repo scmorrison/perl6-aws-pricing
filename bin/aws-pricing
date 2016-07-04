@@ -25,7 +25,7 @@ multi MAIN('list', 'services', Str $refresh?, Str :$cache_dir, Str :$region) {
   }
 
   # List all Service Offer indexes
-  say AWS::Pricing::<$region>;
+  say AWS::Pricing::list-services();
   
 }
 
