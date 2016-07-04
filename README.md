@@ -34,7 +34,6 @@ say AWS::Pricing::service-offers("AmazonS3");
 
 ### Valid service codes:
 
-* 
 * AmazonS3
 * AmazonGlacier
 * AmazonSES
