@@ -3,29 +3,29 @@
 use v6;
 use AWS::Pricing;
 
-# Set config
-AWS::Pricing::config(cache_dir => "$*HOME/.aws-pricing",
-                     region => 'us-east-1');
+# Defaults
+my $default_cache_dir = "$*HOME/.aws-pricing";
+my $default_region = 'us-east-1';
+my $default_format = 'json';
 
-multi MAIN('list', 'services',
-           :$refresh = False, 
-           :$cache_dir,
-           :$region) {
-
-  # Refresh the cache
-  if $refresh {
-    AWS::Pricing::config(refresh => True);
+sub set-config(%options) {
+  for %options.kv -> $option, $value {
+    if $value.defined { 
+      AWS::Pricing::config(|($option => $value));
+    }
   }
+}
 
-   # Set cache_dir
-  if $cache_dir.defined {
-    AWS::Pricing::config(cache_dir => $cache_dir);
-  }
+multi MAIN('list', 'services', 
+           Bool :$refresh = False,
+           :$cache_dir = $default_cache_dir,
+           :$region = $default_region) {
 
-  # Set region
-  if $region {
-    AWS::Pricing::config(region => $region);
-  }
+  my %options = refresh => $refresh,
+                cache_dir => $cache_dir,
+                region => $region;
+
+  set-config(%options);
 
   # List all Service Offer indexes
   say AWS::Pricing::list-services();
@@ -34,27 +34,39 @@ multi MAIN('list', 'services',
 
 multi MAIN('service', 'offers', 
            $service_code,
-           :$refresh = False,
-           :$cache_dir,
-           :$region,
-           :$format = 'json') {
+           Bool :$refresh = False,
+           :$cache_dir = $default_cache_dir,
+           :$region = $default_region,
+           :$format where { $format ~~ 'json'|'csv'} = $default_format) {
 
-  # Refresh the cache
-  if $refresh {
-    AWS::Pricing::config(refresh => True);
-  }
+  my %options = refresh => $refresh,
+                cache_dir => $cache_dir,
+                region => $region;
 
-  # Set cache_dir
-  if $cache_dir {
-    AWS::Pricing::config(cache_dir => $cache_dir);
-  }
+  CATCH {
+    default {
+       say .WHAT.perl, do given .backtrace[0] { .file, .line, .subname }
+    }
+  } 
 
-  # Set region
-  if $region {
-    AWS::Pricing::config(region => $region);
-  }
+  set-config(%options);
 
   # List current offers for specific service
   say AWS::Pricing::service-offers(service_code => $service_code, format => $format);
 
+}
+
+sub USAGE {
+  say q:to/END/;
+      Usage:
+
+        ./bin/aws-pricing list services
+        ./bin/aws-pricing [--format=json|csv] service offers <service_code>;
+
+      Optional arguments:
+        
+        --refresh    - Force cache_dir refresh
+        --cache_dir  - Path to cache_dir service offer files (Default ~/.aws-pricing)
+        --region     - AWS region to pull offer data (Default us-east-1)
+      END
 }

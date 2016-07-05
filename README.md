@@ -11,8 +11,15 @@ Usage
 
 ```bash
 Usage:
-  bin/aws-pricing [--refresh=<Any>] [--cache_dir=<Any>] [--region=<Any>] list services 
-  bin/aws-pricing [--refresh=<Any>] [--cache_dir=<Any>] [--region=<Any>] [--format=<Any>] service offers <service>
+
+  ./bin/aws-pricing list services
+  ./bin/aws-pricing [--format=json|csv] service offers <service_code>;
+
+Optional arguments:
+  
+  --refresh    - Force cache_dir refresh
+  --cache_dir  - Path to cache_dir service offer files (Default ~/.aws-pricing)
+  --region     - AWS region to pull offer data (Default us-east-1)
 ```
 
 Modules and utilities
