@@ -43,12 +43,6 @@ multi MAIN('service', 'offers',
                 cache_dir => $cache_dir,
                 region => $region;
 
-  CATCH {
-    default {
-       say .WHAT.perl, do given .backtrace[0] { .file, .line, .subname }
-    }
-  } 
-
   set-config(%options);
 
   # List current offers for specific service
