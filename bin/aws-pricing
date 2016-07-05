@@ -2,6 +2,7 @@
 
 use v6;
 use AWS::Pricing;
+constant AWSPrice = AWS::Pricing;
 
 # Defaults
 my $default_cache_dir = "$*HOME/.aws-pricing";
@@ -11,7 +12,7 @@ my $default_format = 'json';
 sub set-config(%options) {
   for %options.kv -> $option, $value {
     if $value.defined { 
-      AWS::Pricing::config(|($option => $value));
+      AWSPrice::config(|($option => $value));
     }
   }
 }
@@ -28,7 +29,7 @@ multi MAIN('list', 'services',
   set-config(%options);
 
   # List all Service Offer indexes
-  say AWS::Pricing::list-services();
+  say AWSPrice::list-services();
   
 }
 
@@ -46,7 +47,7 @@ multi MAIN('service', 'offers',
   set-config(%options);
 
   # List current offers for specific service
-  say AWS::Pricing::service-offers(service_code => $service_code, format => $format);
+  say AWSPrice::service-offers(service_code => $service_code, format => $format);
 
 }
 

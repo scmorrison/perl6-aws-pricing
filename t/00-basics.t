@@ -1,10 +1,7 @@
 use Test;
 use AWS::Pricing;
 
-plan 2;
+plan 1;
 
 # use
 use-ok('AWS::Pricing');
-
-# shortname
-is AWSPricing, AWS::Pricing, 'shortname, 1/1';
