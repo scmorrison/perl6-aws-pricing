@@ -37,6 +37,8 @@ say AWS::Pricing::list-offers();
 # List current offers for specific service. Valid formats are json or csv.
 say AWS::Pricing::service-offers(service_code => 'AmazonS3', format => 'json');
 
+# The shortname `AWSPricing` is also available:
+say AWSPricing::list-offers();
 ```
 
 ### Valid service codes:

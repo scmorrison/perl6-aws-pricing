@@ -127,4 +127,8 @@ our sub config(Str :$cache_dir,
   
 }
 
+my package EXPORT::DEFAULT {
+  constant AWSPricing = AWS::Pricing;
+}
+
 # vim: ft=perl6
