@@ -64,3 +64,5 @@ sub USAGE {
         --region     - AWS region to pull offer data (Default us-east-1)
       END
 }
+
+# vim: ft=perl6

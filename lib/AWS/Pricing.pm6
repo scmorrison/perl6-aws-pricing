@@ -127,4 +127,4 @@ our sub config(Str :$cache_dir,
   
 }
 
-
+# vim: ft=perl6
