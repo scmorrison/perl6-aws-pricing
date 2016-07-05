@@ -12,8 +12,8 @@ Usage
 ```bash
 Usage:
 
-  ./bin/aws-pricing list services
-  ./bin/aws-pricing [--format=json|csv] service offers <service_code>;
+  aws-pricing list services
+  aws-pricing [--format=json|csv] service offers <service_code>;
 
 Optional arguments:
   
