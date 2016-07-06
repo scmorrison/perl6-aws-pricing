@@ -1,10 +1,7 @@
-#!/usr/bin/env perl6
-
 use v6;
-
 use HTTP::Tinyish;
 
-unit module AWS::Pricing:ver<0.2.0>:auth<github:scmorrison>;
+module AWS::Pricing:ver<0.2.0>:auth<github:scmorrison> {
 
 our $aws_region = 'us-east-1';
 our $api_version = 'v1.0';
@@ -41,7 +38,7 @@ sub write-to-cache(Str $cache_file, Str $data) {
 
 sub request(Str $url, Str $method='GET') {
 
-    my $http = HTTP::Tinyish.new(agent => "perl6-aws-pricing/0.1.0");
+    my $http = HTTP::Tinyish.new(agent => "AWS::Pricing/"~$?PACKAGE.^ver);
     my %res;
     if $method ~~ 'GET' {
         %res = $http.get($url); 
@@ -50,7 +47,7 @@ sub request(Str $url, Str $method='GET') {
     }
 
     if (!%res<success>) {
-        say "Error: {%res<reason>}";
+        my %error = error => %res<reason>;
     }
 
     return %res<content>;
@@ -60,20 +57,22 @@ our sub list-services() {
 
     my $extension = 'json'; 
 
-    my $offers_cache = "$cache_path/offers.$extension";
+    my $cache = "$cache_path/offers.$extension";
 
-    # Do we have a cached service list
-    if !$refresh_cache and path-exists($offers_cache, 'f') {
-      return load-from-cache $offers_cache;
+    # Use cached data if available
+    if !$refresh_cache and path-exists($cache, 'f') {
+      return load-from-cache $cache;
     }
+
+    # No cache, or forced refresh
+    # Get latest data from API
 
     # Reqest all Services available and their Current Offer URLs
     my $url = "https://pricing.$aws_region.amazonaws.com/offers/$api_version/aws/index.$extension";
-    my $offers = request($url, 'GET');
+    my $data = request($url, 'GET');
     
-    if write-to-cache($offers_cache, $offers) {
-      return $offers;
-    }
+    # Cache and return latest data from API
+    return $data if write-to-cache($cache, $data);
 
 }
 
@@ -82,12 +81,15 @@ our sub service-offers(Str :$service_code!, Str :$format) {
     my $extension = $format ~~ 'json'|'csv' ?? $format !! 'json'; 
 
     # Get Current Offers for specific Service
-    my $service_offers_cache = "$cache_path/service-offers-$service_code.$extension";
+    my $cache = "$cache_path/service-offers-$service_code.$extension";
 
-    # Do we have a cached service list
-    if !$refresh_cache and path-exists($service_offers_cache, 'f') {
-      return load-from-cache $service_offers_cache;
+    # Use cached service offers if available
+    if !$refresh_cache and path-exists($cache, 'f') {
+      return load-from-cache $cache;
     }
+
+    # No cache, or forced refresh
+    # Get latest data from API
 
     # Confirm $offer_code is valid
     if (!@service_codes.first: $service_code) {
@@ -95,11 +97,10 @@ our sub service-offers(Str :$service_code!, Str :$format) {
     }
 
     my $url = "https://pricing.$aws_region.amazonaws.com/offers/$api_version/aws/$service_code/current/index.$extension";
-    my $service_offers = request($url, 'GET');
+    my $data = request($url, 'GET');
 
-    if write-to-cache($service_offers_cache, $service_offers) {
-      return $service_offers;
-    }
+    # Cache and return latest data from API
+    return $data if write-to-cache($cache, $data);
 
 }
 
@@ -113,18 +114,12 @@ our sub config(Str :$cache_dir,
     if !path-exists($cache_path, 'd') { mkdir $cache_path }
   }
 
-  if $region.defined {
-    $aws_region = $region;
-  }
-
-  if $api_ver.defined {
-    $api_version = $api_ver;
-  }
-
-  if $refresh.defined {
-    $refresh_cache = True;
-  }
+  $aws_region = $region if $region.defined; 
+  $api_version = $api_ver if $api_ver.defined;
+  $refresh_cache = True if $refresh.defined;
   
+};
+
 }
 
 # vim: ft=perl6
