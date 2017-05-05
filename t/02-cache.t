@@ -48,7 +48,7 @@ my $r5_region                = 'eu-west-1';
 my $r5_cached_service_offers = slurp "t/service-offers-{$r5_service_code}-{$r5_region}.csv";
 my $r5_service_offers        = AWS::Pricing::service-offers(
     config       => AWS::Pricing::config(cache_path => 't'),
-    ervice_code => $r5_service_code,
+    service_code => $r5_service_code,
     format       => 'csv',
     region       => $r5_region
 );
