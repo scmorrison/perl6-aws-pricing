@@ -22,25 +22,25 @@ USAGE
 
 COMMANDS
 
-    services              Return Service Offer index
-    service-offers        Return Service Offers for specific service code and/or region
-    service-codes         List all valid service codes
-    regions               List all valid regions
-    version               Display aws-pricing version
+    services           Return Service Offer index
+    service-offers     Return Service Offers for specific service code and/or region
+    service-codes      List all valid service codes
+    regions            List all valid regions
+    version            Display aws-pricing version
 
 OPTIONS
 
     service-offers specific
 
-    --format              json|csv Default json
-    --region              Filter AWS region to pull offer data
-    --header              Display the CSV header. Disabled by default
+    --format           json|csv Default json
+    --region           Filter AWS region to pull offer data
+    --header           Display the CSV header. Disabled by default
 
 FLAGS
 
-    --refresh             Force cache_dir refresh
-    --cache_path          Path to cache path service offer files (Default ~/.aws-pricing)
-    --quiet               No output, cache only (services, service-offers)
+    --refresh          Force cache_dir refresh
+    --cache_path       Path to cache path service offer files (Default ~/.aws-pricing)
+    --quiet            No output, cache only (services, service-offers)
 ```
 
 CLI
