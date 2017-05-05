@@ -35,6 +35,7 @@ CLI
 
 ## List services
 ```
+# Return Service Offer Index
 aws-pricing services
 
 # Refresh local cache
@@ -89,10 +90,6 @@ my $config = AWS::Pricing::config(
 AWS::Pricing::services;
 	
 # Service Offer Indexes with custom config
-AWS::Pricing::services config => $config;
-
-# List 
-AWS::Pricing::services;
 AWS::Pricing::services config => $config;
 
 # Service Codes List
