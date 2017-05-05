@@ -1,7 +1,7 @@
 use v6;
 use HTTP::Tinyish;
 
-unit module AWS::Pricing:ver<0.2.1>:auth<github:scmorrison>;
+unit module AWS::Pricing:ver<0.2.2>:auth<github:scmorrison>;
 
 our sub service-codes(
     --> List
