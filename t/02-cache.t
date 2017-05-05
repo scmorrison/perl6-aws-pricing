@@ -40,7 +40,7 @@ my $r4_service_offers = AWS::Pricing::service-offers(
     service_code => $r4_service_code,
     format       => 'csv'
 );
-is $r4_service_offers, $r4_cached_service_offers, 'service-offers 3/4: csv';
+is $r4_service_offers, AWS::Pricing::strip-header-csv($r4_cached_service_offers), 'service-offers 3/4: csv';
 
 # service-offers (csv: region)
 my $r5_service_code          = 'AmazonS3';
@@ -52,4 +52,4 @@ my $r5_service_offers        = AWS::Pricing::service-offers(
     format       => 'csv',
     region       => $r5_region
 );
-is $r5_service_offers, $r5_cached_service_offers, 'service-offers 4/4: csv (region)';
+is $r5_service_offers, AWS::Pricing::strip-header-csv($r5_cached_service_offers), 'service-offers 4/4: csv (region)';

@@ -11,16 +11,23 @@ Usage
 
 ```bash
 Usage: aws-pricing services
-       aws-pricing [--format=json|csv] service-offers <service_code>;
+       aws-pricing service-offers <service_code>;
        aws-pricing service-codes
        aws-pricing regions 
        aws-pricing version
 
 Optional arguments:
-  
+
+  service-offers
+
+  --format     - json|csv Default json
+  --region     - Filter AWS region to pull offer data
+  --header     - Display the CSV header. Disabled by default
+
+  general
+
   --refresh    - Force cache_dir refresh
   --cache_path - Path to cache path service offer files (Default ~/.aws-pricing)
-  --region     - Filter AWS region to pull offer data
 ```
 
 CLI
@@ -41,6 +48,9 @@ aws-pricing service-offers AmazonEC2
 
 # Output csv format
 aws-pricing --format=csv service-offers AmazonEC2
+
+# Output csv format with headers
+aws-pricing --headers --format=csv service-offers AmazonEC2
 
 # Refresh local cache
 aws-pricing --refresh --format=csv service-offers AmazonEC2
@@ -102,10 +112,11 @@ AWS::Pricing::service-offers(
 
 # Service Offers: Single region, config, csv, region
 AWS::Pricing::service-offers(
-    config       => $config,
-    service_code => 'AmazonS3',
-    format       => 'csv',
-    region       => 'eu-west-1'
+    config          => $config,
+    service_code    => 'AmazonS3',
+    format          => 'csv',
+    region          => 'eu-west-1',
+    display_header  => True
 );
 ```
 

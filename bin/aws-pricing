@@ -6,19 +6,26 @@ use AWS::Pricing;
 constant AWSP = AWS::Pricing;
 
 sub USAGE {
-  say q:to/END/;
-      Usage: aws-pricing services
-             aws-pricing [--format=json|csv] service-offers <service_code>;
-             aws-pricing service-codes
-             aws-pricing regions 
-             aws-pricing version
+    say q:to/END/;
+    Usage: aws-pricing services
+           aws-pricing service-offers <service_code>;
+           aws-pricing service-codes
+           aws-pricing regions 
+           aws-pricing version
 
-      Optional arguments:
-        
-        --refresh    - Force cache_dir refresh
-        --cache_path - Path to cache path service offer files (Default ~/.aws-pricing)
-        --region     - Filter AWS region to pull offer data
-      END
+    Optional arguments:
+
+      service-offers
+
+      --format     - json|csv Default json
+      --region     - Filter AWS region to pull offer data
+      --header     - Display the CSV header. Disabled by default
+
+      general
+
+      --refresh    - Force cache_dir refresh
+      --cache_path - Path to cache path service offer files (Default ~/.aws-pricing)
+    END
 }
 
 multi MAIN(
@@ -39,21 +46,23 @@ multi MAIN(
 multi MAIN(
     'service-offers', 
     Str  $service_code,
-    Bool :$refresh = False,
-    Str  :$cache_path   = "$*HOME/.aws-pricing",
-    Str  :$region       = '',
+    Bool :$refresh         = False,
+    Bool :$header  = False,
+    Str  :$cache_path      = "$*HOME/.aws-pricing",
+    Str  :$region          = '',
     Str  :$format where { $format ~~ 'json'|'csv'} = 'json'
     --> Bool
 ) {
     # List current offers for specific service
     say AWSP::service-offers(
-        config       => AWSP::config(
-            refresh    => $refresh,
-            cache_path => $cache_path
-        ),
-        service_code => $service_code,
-        format       => $format,
-        region       => $region
+        display_header  => $header,
+        service_code    => $service_code,
+        format          => $format,
+        region          => $region,
+        config          => AWSP::config(
+            refresh     => $refresh,
+            cache_path  => $cache_path
+        )
     );
 
 }
