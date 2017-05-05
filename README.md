@@ -57,7 +57,6 @@ aws-pricing --refresh services
 # Refresh local cache, no output
 aws-pricing --refresh --quiet services
 ```
-```
 
 ## List service offers
 ```
