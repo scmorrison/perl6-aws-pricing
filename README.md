@@ -146,16 +146,11 @@ AWS::Pricing::service-offers(
 Installation
 ============
 
-Install directly with "panda":
+Install directly with zef:
 
-    # From the source directory
-   
-		panda install .
-
-		# Or with helper script
-
-    ./scripts/install.sh
-
+```
+zef install AWS::Profile
+```
 
 Testing
 =======
