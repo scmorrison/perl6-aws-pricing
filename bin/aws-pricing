@@ -25,36 +25,37 @@ sub USAGE {
 
       --refresh    - Force cache_dir refresh
       --cache_path - Path to cache path service offer files (Default ~/.aws-pricing)
+      --quiet      - No output, cache only (services, service-offers)
     END
 }
 
 multi MAIN(
     'services', 
     Bool :$refresh    = False,
-    Str  :$cache_path = "$*HOME/.aws-pricing"
-    --> Bool
+    Str  :$cache_path = "$*HOME/.aws-pricing",
+    Bool :$quiet      = False
 ) {
     # List all Service Offer indexes
-    say AWSP::services(
+    AWSP::services(
         config => AWSP::config(
             refresh    => $refresh,
             cache_path => $cache_path
         )
-    );
+    ).&{ .say unless $quiet };
 }
 
 multi MAIN(
     'service-offers', 
     Str  $service_code,
     Bool :$refresh         = False,
-    Bool :$header  = False,
+    Bool :$header          = False,
     Str  :$cache_path      = "$*HOME/.aws-pricing",
     Str  :$region          = '',
-    Str  :$format where { $format ~~ 'json'|'csv'} = 'json'
-    --> Bool
+    Str  :$format where { $format ~~ 'json'|'csv'} = 'json',
+    Bool :$quiet           = False
 ) {
     # List current offers for specific service
-    say AWSP::service-offers(
+    AWSP::service-offers(
         display_header  => $header,
         service_code    => $service_code,
         format          => $format,
@@ -63,8 +64,7 @@ multi MAIN(
             refresh     => $refresh,
             cache_path  => $cache_path
         )
-    );
-
+    ).&{ .say unless $quiet };
 }
 
 multi MAIN(

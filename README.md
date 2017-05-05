@@ -28,6 +28,7 @@ Optional arguments:
 
   --refresh    - Force cache_dir refresh
   --cache_path - Path to cache path service offer files (Default ~/.aws-pricing)
+  --quiet      - No output, cache only (services, service-offers)
 ```
 
 CLI
@@ -40,6 +41,10 @@ aws-pricing services
 
 # Refresh local cache
 aws-pricing --refresh services
+
+# Refresh local cache, no output
+aws-pricing --refresh --quiet services
+```
 ```
 
 ## List service offers
@@ -55,6 +60,9 @@ aws-pricing --headers --format=csv service-offers AmazonEC2
 
 # Refresh local cache
 aws-pricing --refresh --format=csv service-offers AmazonEC2
+
+# Refresh local cache, no output
+aws-pricing --refresh --quiet --format=csv service-offers AmazonEC2
 ```
 
 ## List valid Service Codes
