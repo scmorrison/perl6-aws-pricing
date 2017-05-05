@@ -5,7 +5,7 @@
   "author"      : "github:scmorrison",
   "license"     : "Artistic-2.0",
   "description" : "AWS Price List API library",
-  "build-depends" : [ ],
+  "build-depends" : [],
   "test-depends" : [
       "Test"
   ],
