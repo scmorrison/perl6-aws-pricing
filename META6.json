@@ -10,7 +10,8 @@
       "Test"
   ],
   "provides" : {
-      "AWS::Pricing" : "lib/AWS/Pricing.pm6"
+      "AWS::Pricing"      : "lib/AWS/Pricing.pm6",
+      "AWS::Pricing::CLI" : "lib/AWS/Pricing/CLI.pm6"
   },
   "depends"     : [ "HTTP::Tinyish", "Test" ],
   "source-url"  : "git://github.com/scmorrison/perl6-aws-pricing.git",
