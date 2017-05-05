@@ -149,7 +149,7 @@ Installation
 Install directly with zef:
 
 ```
-zef install AWS::Profile
+zef install AWS::Pricing
 ```
 
 Testing
