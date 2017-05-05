@@ -6,19 +6,19 @@ unit module AWS::Pricing:ver<0.2.1>:auth<github:scmorrison>;
 our sub service-codes(
     --> List
 ) {
-    "AmazonS3",
-    "AmazonGlacier",
-    "AmazonSES",
-    "AmazonRDS",
-    "AmazonSimpleDB",
+    "AmazonCloudFront",
     "AmazonDynamoDB",
     "AmazonEC2",
-    "AmazonRoute53",
-    "AmazonRedshift",
     "AmazonElastiCache",
-    "AmazonCloudFront",
-    "awskms",
-    "AmazonVPC"
+    "AmazonGlacier",
+    "AmazonRDS",
+    "AmazonRedshift",
+    "AmazonRoute53",
+    "AmazonSES",
+    "AmazonSimpleDB",
+    "AmazonS3",
+    "AmazonVPC",
+    "awskms"
 }
 
 sub valid-service($code) {
@@ -28,21 +28,21 @@ sub valid-service($code) {
 our sub regions(
     --> List
 ) {
-    "us-east-1",
-  	"us-east-2",
-  	"us-west-1",
-  	"us-west-2",
-  	"eu-west-1",
-  	"ap-southeast-1",
-  	"ap-southeast-2",
   	"ap-northeast-1",
   	"ap-northeast-2",
-  	"sa-east-1",
-  	"eu-central-1",
-  	"us-gov-west-1",
   	"ap-south-1",
+  	"ap-southeast-1",
+  	"ap-southeast-2",
   	"ca-central-1",
-  	"eu-west-2"
+  	"eu-central-1",
+  	"eu-west-1",
+  	"eu-west-2",
+  	"sa-east-1",
+    "us-east-1",
+  	"us-east-2",
+  	"us-gov-west-1",
+  	"us-west-1",
+  	"us-west-2"
 }
 
 sub valid-region($region) {
